@@ -1,20 +1,24 @@
 
-import React from 'react';
+import  { ReactNode } from 'react';
 import { Loader2 } from 'lucide-react';
 
 // Utility function to merge className strings
-const cn = (...classes) => {
-  return classes.filter(Boolean).join(' ');
-};
 
+type Props= {
+  children: ReactNode, 
+  variant? : string,
+  size? : string,
+  isLoading?: boolean,
+  className: string
+}
 const Button = ({ 
-  children, 
+  children,
   variant = 'default', 
   size = 'default', 
   isLoading = false, 
-  className, 
+  className= "", 
   ...props 
-}) => {
+}:Props) => {
   const baseStyles = "inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
   
   const variants = {
@@ -33,13 +37,13 @@ const Button = ({
 
   return (
     <button
-      className={cn(
-        baseStyles,
-        variants[variant],
-        sizes[size],
-        isLoading && "relative text-transparent hover:text-transparent",
-        className
-      )}
+      className={`
+        ${baseStyles} 
+        ${variants["outline"]} 
+        ${sizes["default"]} 
+        ${isLoading && "relative text-transparent hover:text-transparent"} 
+        ${className} 
+      `}
       disabled={isLoading}
       {...props}
     >
@@ -55,12 +59,8 @@ const Button = ({
 
 // Demo Page Component
 const ButtonDemo = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  const handleClick = () => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 2000);
-  };
+  
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -71,30 +71,30 @@ const ButtonDemo = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Button Variants</h2>
             <div className="flex flex-wrap gap-4">
-              <Button>Default Button</Button>
-              <Button variant="outline">Outline Button</Button>
-              <Button variant="ghost">Ghost Button</Button>
-              <Button variant="danger">Danger Button</Button>
-              <Button variant="success">Success Button</Button>
+              <Button className=" " >Default Button</Button>
+              <Button className=" " variant="outline">Outline Button</Button>
+              <Button className=" " variant="ghost">Ghost Button</Button>
+              <Button className=" " variant="danger">Danger Button</Button>
+              <Button className=" " variant="success">Success Button</Button>
             </div>
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4">Button Sizes</h2>
             <div className="flex flex-wrap items-center gap-4">
-              <Button size="small">Small Button</Button>
-              <Button size="default">Default Button</Button>
-              <Button size="large">Large Button</Button>
+              <Button className=" " size="small">Small Button</Button>
+              <Button className=" " size="default">Default Button</Button>
+              <Button className=" " size="large">Large Button</Button>
             </div>
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4">Loading State</h2>
             <div className="flex flex-wrap gap-4">
-              <Button isLoading={isLoading} onClick={handleClick}>
+              <Button className=" " isLoading={false}> 
                 Click to Load
               </Button>
-              <Button variant="outline" isLoading>Loading...</Button>
+              <Button className=" " variant="outline" isLoading>Loading...</Button>
             </div>
           </div>
         </section>
